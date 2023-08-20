@@ -1,0 +1,63 @@
+class Produto:
+    def __init__(self, codigo, nome_do_produto, quantidade, preco):
+        self.codigo = codigo
+        self.nome_do_produto = nome_do_produto
+        self.quantidade = quantidade
+        self.preco = preco
+
+class GerenciadorEstoque:
+
+    def __init__(self):
+        self.estoque_dos_produtos = []
+
+    def adicionar_produto(self, produto):
+        self.estoque_dos_produtos.append(produto)
+        print(f'Produto {produto.nome_do_produto}, adicionado.')
+
+    def buscar_produto(self, codigo):
+        for produto in self.estoque_dos_produtos:
+            if produto.codigo == codigo:
+                return produto
+        return None
+
+    def listar_produto(self):
+        print('Seu estoque:')
+        for produto in self.estoque_dos_produtos:
+            print(f'código: {produto.codigo}, nome: {produto.nome_do_produto}, quantidade: {produto.quantidade}, preço: R${produto.preco:.2f}')
+        print()
+
+gerenciador = GerenciadorEstoque()
+
+while True:
+    print('1. Adicionar produtos')
+    print('2. Buscar Produtos')
+    print('3. Listar Produtos')
+    print('4. Sair')
+
+    escolha = input('Escolha uma opção: ')
+
+    if escolha == '1':
+        codigo = input('Digite o código do produto: ')
+        nome_do_produto = input('Digite o nome do produto: ')
+        quantidade = int(input('Digite a quantidade do produto: '))
+        preco = float(input('Digite o preço do produto: '))
+        produto = Produto(codigo, nome_do_produto, quantidade, preco)
+        gerenciador.adicionar_produto(produto)
+    
+    elif escolha == '2':
+        codigo = input('Digite o código do produto: ')
+        produto = gerenciador.buscar_produto(codigo)
+        if produto:
+            print(f'Produto encontrado. Nome: {produto.nome_do_produto}, Quantidade: {produto.quantidade}, Preço: {produto.preco}')
+        else:
+            print('Produto não encontrado.')
+    
+    elif escolha == '3':
+        gerenciador.listar_produto()
+    
+    elif escolha == '4':
+        print('Desligando...')
+        break
+
+    else:
+        print('Escolha inválida.')
